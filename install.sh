@@ -4,14 +4,12 @@ set -e
 CURRENT_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 #CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "Find engine folder: ${CURRENT_DIR}"
-conda install -y yarn -c conda-forge
-pip install -r ./engine/requirements/dev.txt
-conda install -y jupyter -c conda-forge
-conda install -y rsync -c conda-forge
+${CURRENT_DIR}/setup.sh
 # template this
 rsync -r ${CURRENT_DIR}/package.root.json.example ${CURRENT_DIR}/../package.json
 rsync -r ${CURRENT_DIR}/template/app ${CURRENT_DIR}/../
 rsync -r ${CURRENT_DIR}/.env.example ${CURRENT_DIR}/.env
+rsync -r ${CURRENT_DIR}/setup.sh ${CURRENT_DIR}/../install.sh
 yarn install
 PREV_DIR=$(pwd)
 cd ${CURRENT_DIR}/../app/js/
